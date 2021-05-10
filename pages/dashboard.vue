@@ -2,9 +2,12 @@
     <v-app>
         <AppBarAndDrawer></AppBarAndDrawer>  
         <h2>Dashboard Page</h2>
-        <h3>your email: {{myData.data.email}}</h3>
-        <h3>your total followers: {{myData.data.followers.total}}</h3>
-        <v-btn @click="getAlbum()">Get Album</v-btn>
+        <h3>your email: {{myProfileData.data.email}}</h3>
+        <h3>your total followers: {{myProfileData.data.followers.total}}</h3>
+        <v-btn @click="getMyTopSongs()">Get Top Songs</v-btn>
+        <ul>
+            <li v-for="item in myTopData.items" :key="item.id">{{item.name}}</li>
+        </ul>
     </v-app>
 </template>
 
@@ -16,28 +19,28 @@ import axios from 'axios'
 export default {
     data: function() {
         return {
-            myData: { },
-            token: ""
+            myProfileData: {},
+            token: "",
+            myTopData: {}
         }
     },
 
     created() {
-        this.myData = this.$route.params.myData
+        this.myProfileData = this.$route.params.myData
         this.token = this.$route.params.token
-        console.log(this.token)
     },
 
     methods: {
-        async getAlbum() {
-            var url = 'https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=10&offset=5'
+        async getMyTopSongs() {
+            var url = 'https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=50&offset=5'
             let config = {
                 headers: {
-                    Authorization: `Bearer ${this.thisToken}`,
+                    Authorization: `Bearer ${this.token}`,
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
             }
-            const res = await axios.get(url, config).then(data => console.log(data))
+            const res = await axios.get(url, config).then(data => this.myTopData = data.data)
         }
     },
     components: {

@@ -26,7 +26,7 @@ import AppBarAndDrawer from '../components/AppBarAndDrawer.vue'
 
 export default {
     data: () => ({
-
+    
     }),
 
     components: {
@@ -48,23 +48,10 @@ export default {
 </script>
 
 <style scoped>
-    #app-bar-text {
-        font-size: 30px;
-        color: black;
-        font-family: Cochin;
-    }
 
     #most-played {
         margin: 50px;
         text-align: center;
-    }
-
-    #UsernameTextArea {
-        background-color: white;
-    }
-
-    #PasswordTextArea {
-        background-color: white;
     }
 
     #backgroundMusicImg {
