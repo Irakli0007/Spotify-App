@@ -1,12 +1,15 @@
 <template>
     <v-app>
         <AppBarAndDrawer></AppBarAndDrawer>   
-         <v-container>
-            <h2>Callback Page</h2>
+        <h2>Callback Page</h2>
+        <v-container>
             <v-row justify="center">
                 <v-card
-                max-width="800"
+                    max-width="800"
                 >
+                    <v-img height="250"
+                        src="https://www.incimages.com/uploaded_files/image/1920x1080/getty_506068552_298876.jpg"
+                    ></v-img>
                     <v-btn @click="Login()" x-large class="my-12" color="#1DB954" rounded>Login</v-btn>
                 </v-card>
             </v-row>
@@ -52,3 +55,7 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+
+</style>

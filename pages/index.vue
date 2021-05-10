@@ -9,10 +9,10 @@
         <v-container>
             <v-row justify="center">
                 <v-card id="most-played"
-                max-width="800"
+                    max-width="800"
                 >
                     <v-img id="backgroundMusicImg" height="250"
-                    src="https://www.incimages.com/uploaded_files/image/1920x1080/getty_506068552_298876.jpg"
+                        src="https://www.incimages.com/uploaded_files/image/1920x1080/getty_506068552_298876.jpg"
                     ></v-img>
                     <v-btn @click="sendToSpotifyLogin()" x-large class="my-12" color="#1DB954" rounded>Login with Spotify</v-btn>
                 </v-card>

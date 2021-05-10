@@ -22,7 +22,7 @@
                         ></v-img>
                         <v-list-item @click="playSong(item.external_urls.spotify)">
                             <v-list-item-icon>
-                                <v-icon>mdi-play</v-icon>
+                                <v-icon color="#1DB954">mdi-play</v-icon>
                             </v-list-item-icon>
                             <v-list-item-title>Play Song</v-list-item-title>
                         </v-list-item>                         
