@@ -5,9 +5,14 @@
         <h3>your email: {{myProfileData.data.email}}</h3>
         <h3>your total followers: {{myProfileData.data.followers.total}}</h3>
         <v-btn @click="getMyTopSongs()">Get Top Songs</v-btn>
-        <ul>
-            <li v-for="item in myTopData.items" :key="item.id">{{item.name}}</li>
-        </ul>
+
+        <v-card max-width="400px" class="my-12 mx-12" v-for="item in myTopData.items" :key="item.id">
+            <v-card-title>{{item.name}}</v-card-title>
+            <v-card-text>{{item.artists[0].name}}</v-card-text>
+            <v-img height="250"
+                :src = item.album.images[0].url
+            ></v-img>
+        </v-card>
     </v-app>
 </template>
 
@@ -41,6 +46,7 @@ export default {
                 },
             }
             const res = await axios.get(url, config).then(data => this.myTopData = data.data)
+            console.log(this.myTopData)
         }
     },
     components: {
