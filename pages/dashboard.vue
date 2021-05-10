@@ -1,14 +1,42 @@
 <template>
     <v-app>
-        <AppBarAndDrawer></AppBarAndDrawer>  
+        <AppBarAndDrawer></AppBarAndDrawer> 
+        <v-container>
+            <v-row justify="center"> 
+                <v-alert
+                    border="top"
+                    color="error"
+                    dense
+                    class="mt-2"
+                    type="error"
+                    :value="alert"
+                    max-width="500px"
+                >
+                    Please select a time range.
+                </v-alert>
+            </v-row>
+        </v-container>
         <v-container>
             <h2>Dashboard Page</h2>
             <h3>Your email address: {{myProfileData.data.email}}</h3>
             <h3>Your total followers: {{myProfileData.data.followers.total}}</h3>
         </v-container>
-        <v-container>
+        <v-container>     
             <v-row justify="center">
-                <v-btn @click="getMyTopSongs()" x-large class="my-12" color="#1DB954" max-width="300px" rounded>Get My Top Songs</v-btn>
+                <v-card width="250px">
+                   <v-col>
+                        <v-btn @click="getMyTopSongs()" x-large class="my-12" color="#1DB954" rounded>Get My Top Songs</v-btn>
+                    </v-col>
+                    <v-col>
+                        <v-select
+                            @input="setSelection"
+                            :items="selectItems"
+                            label="Time Range"
+                            outlined
+                            item-color="#1DB954"
+                        ></v-select>
+                    </v-col>
+                </v-card>
             </v-row>
         </v-container>
         <v-row>
@@ -25,7 +53,7 @@
                                 <v-icon color="#1DB954">mdi-play</v-icon>
                             </v-list-item-icon>
                             <v-list-item-title>Play Song</v-list-item-title>
-                        </v-list-item>                         
+                        </v-list-item>
                     </v-card>
                 </v-col>
             </template>
@@ -43,7 +71,10 @@ export default {
         return {
             myProfileData: {},
             token: "",
-            myTopData: {}
+            myTopData: {},
+            selectItems: ['short_term', 'medium_term', 'long_term'],
+            selectedInterval : "",
+            alert: false
         }
     },
 
@@ -54,7 +85,10 @@ export default {
 
     methods: {
         async getMyTopSongs() {
-            var url = 'https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=50&offset=5'
+            if(this.selectedInterval == "") {
+                return this.createError();
+            }
+            var url = `https://api.spotify.com/v1/me/top/tracks?time_range=${this.selectedInterval}&limit=50&offset=5`
             let config = {
                 headers: {
                     Authorization: `Bearer ${this.token}`,
@@ -66,7 +100,17 @@ export default {
         },
         playSong(url) {
             window.open(url, "_blank")
+        },
+        setSelection(value) {
+            this.selectedInterval = value
+            if(this.selectedInterval != "") {
+                this.alert = false
+            }
+        },
+        createError() {
+            this.alert = true
         }
+
     },
     components: {
         AppBarAndDrawer
@@ -75,5 +119,7 @@ export default {
 </script>
 
 <style scoped>
+
+
 
 </style>
