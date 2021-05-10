@@ -1,18 +1,35 @@
 <template>
     <v-app>
         <AppBarAndDrawer></AppBarAndDrawer>  
-        <h2>Dashboard Page</h2>
-        <h3>your email: {{myProfileData.data.email}}</h3>
-        <h3>your total followers: {{myProfileData.data.followers.total}}</h3>
-        <v-btn @click="getMyTopSongs()">Get Top Songs</v-btn>
-
-        <v-card max-width="400px" class="my-12 mx-12" v-for="item in myTopData.items" :key="item.id">
-            <v-card-title>{{item.name}}</v-card-title>
-            <v-card-text>{{item.artists[0].name}}</v-card-text>
-            <v-img height="250"
-                :src = item.album.images[0].url
-            ></v-img>
-        </v-card>
+        <v-container>
+            <h2>Dashboard Page</h2>
+            <h3>Your email address: {{myProfileData.data.email}}</h3>
+            <h3>Your total followers: {{myProfileData.data.followers.total}}</h3>
+        </v-container>
+        <v-container>
+            <v-row justify="center">
+                <v-btn @click="getMyTopSongs()" x-large class="my-12" color="#1DB954" max-width="300px" rounded>Get My Top Songs</v-btn>
+            </v-row>
+        </v-container>
+        <v-row>
+            <template v-for="item in myTopData.items">
+                <v-col cols="3" :key="item.id">
+                    <v-card class="my-12 mx-12">
+                        <v-card-title>{{item.name}}</v-card-title>
+                        <v-card-text v-for="artist in item.artists" :key="artist.id">{{artist.name}}</v-card-text>
+                        <v-img
+                            :src = item.album.images[0].url
+                        ></v-img>
+                        <v-list-item @click="playSong(item.external_urls.spotify)">
+                            <v-list-item-icon>
+                                <v-icon>mdi-play</v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-title>Play Song</v-list-item-title>
+                        </v-list-item>                         
+                    </v-card>
+                </v-col>
+            </template>
+        </v-row>
     </v-app>
 </template>
 
@@ -46,7 +63,9 @@ export default {
                 },
             }
             const res = await axios.get(url, config).then(data => this.myTopData = data.data)
-            console.log(this.myTopData)
+        },
+        playSong(url) {
+            window.open(url, "_blank")
         }
     },
     components: {

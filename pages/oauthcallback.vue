@@ -1,8 +1,8 @@
 <template>
     <v-app>
-        <AppBarAndDrawer></AppBarAndDrawer>  
-        <h2>Callback Page</h2>
+        <AppBarAndDrawer></AppBarAndDrawer>   
          <v-container>
+            <h2>Callback Page</h2>
             <v-row justify="center">
                 <v-card
                 max-width="800"
@@ -22,7 +22,7 @@ import axios from 'axios'
 export default {
     data: function() {
         return {
-            thisToken: null,
+            thisToken: "",
         }
     },
 
@@ -45,7 +45,6 @@ export default {
             var myData = { }
             const res = await axios.get(url, config).then(data => myData = data)
             this.$router.push({name: 'dashboard', params: { myData: myData, token: this.thisToken } })
-
         }
     },
     components: {
