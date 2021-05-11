@@ -33,7 +33,6 @@
                             :items="selectItems"
                             label="Time Range"
                             outlined
-                            item-color="#1DB954"
                         ></v-select>
                     </v-col>
                 </v-card>
@@ -48,12 +47,13 @@
                         <v-img
                             :src = item.album.images[0].url
                         ></v-img>
-                        <v-list-item @click="playSong(item.external_urls.spotify)">
+                        <v-list-item @click="setActive(item)">
                             <v-list-item-icon>
                                 <v-icon color="#1DB954">mdi-play</v-icon>
                             </v-list-item-icon>
                             <v-list-item-title>Play Song</v-list-item-title>
                         </v-list-item>
+                        <iframe v-if="item.enabled == true" :src="`https://open.spotify.com/embed/track/${item.id}`" width="100%" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                     </v-card>
                 </v-col>
             </template>
@@ -74,7 +74,7 @@ export default {
             myTopData: {},
             selectItems: ['short_term', 'medium_term', 'long_term'],
             selectedInterval : "",
-            alert: false
+            alert: false,
         }
     },
 
@@ -98,8 +98,9 @@ export default {
             }
             const res = await axios.get(url, config).then(data => this.myTopData = data.data)
         },
-        playSong(url) {
-            window.open(url, "_blank")
+        setActive(item) {
+            item.enabled = true;
+            this.$forceUpdate()
         },
         setSelection(value) {
             this.selectedInterval = value
